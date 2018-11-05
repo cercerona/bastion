@@ -20,12 +20,15 @@ def init_main_window():
     :param: нет
     :return: ничего
     """
-    global root, open_file_button, open_file_button #создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
+    global root, open_file_button, open_file_label #создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
     root = tkinter.Tk()
     root.title("WAB reports")
     open_file_button = tkinter.Button(root, text = 'Open report')
-    open_file_button.pack()
+    open_file_button.grid(row = 0, column = 3)
     open_file_button.bind('<Button>', open_report_file)
+
+    open_file_label = tkinter.Label(root, text = 'Report filename:')
+    open_file_label.grid(row = 0, column = 0, columnspan = 2)
 
 if __name__ == '__main__':
     init_main_window()
