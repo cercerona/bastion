@@ -1,7 +1,8 @@
 """File include the interface function for WAB report processing"""
-from read_csv_report_files import *
+from read_csv_report_files import read_report
 import tkinter
 from tkinter import filedialog as fd
+import pprint
 
 def open_report_file(event):
     """
@@ -11,9 +12,11 @@ def open_report_file(event):
     with open(fd.askopenfilename(filetype = [("Report files", "*.csv")]), 'r') as infile:
         table = read_report(infile)
 
+
     pprint.pprint(table)
     print('Всего записей: ', len(table))
 
+    return table
 
 def init_main_window():
     """Создает и инициирует виджеты главного окна
