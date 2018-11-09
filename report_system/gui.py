@@ -1,8 +1,17 @@
 """File include the interface function for WAB report processing"""
 from read_csv_report_files import read_report
-from  tkinter import *
+from tkinter import *
 from tkinter import filedialog as fd
 import pprint
+import matplotlib.pyplot as plt
+
+def plot_pie_report(table):
+    """
+    Рисует круговую диаграмму
+    :param table: Таблица с данными. В первой строке содержит подписи, во второй - данные 
+    :return: ничего
+    """
+    #plt.pie(table[1][])
 
 def open_report_file(event):
     """Функция открывает файл с отчетом"""
@@ -10,16 +19,17 @@ def open_report_file(event):
     with open(fd.askopenfilename(filetypes=[('Report files:', '*.csv')])) as infile:
         table = read_report(infile)
 
-
     pprint.pprint(table)
     print('Всего записей: ', len(table))
+    print(table[1][0])
 
     return table
+
 
 def init_main_window():
     """Создает и инициирует виджеты главного окна"""
     global main_window, main_frame, top_frame, open_file_button, open_file_label, bottom_frame, save_report_button, \
-        table_frame, canvas_frame  #создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
+        table_frame, canvas_frame  # создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
     main_window = Tk()  # Создадим главное окно программы
     main_window.title('Программа визуализации отчетов')  # Зададим заголовок главного окна программы
     main_window.geometry('600x300')
