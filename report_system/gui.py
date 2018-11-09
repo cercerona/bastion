@@ -1,15 +1,13 @@
 """File include the interface function for WAB report processing"""
 from read_csv_report_files import read_report
-import tkinter
+from  tkinter import *
 from tkinter import filedialog as fd
 import pprint
 
 def open_report_file(event):
-    """
-    Функция открывает файл с отчетом
-    """
+    """Функция открывает файл с отчетом"""
     table = []
-    with open(fd.askopenfilename(filetype = [("Report files", "*.csv")]), 'r') as infile:
+    with open(fd.askopenfilename(filetypes=[('Report files:', '*.csv')])) as infile:
         table = read_report(infile)
 
 
@@ -19,21 +17,41 @@ def open_report_file(event):
     return table
 
 def init_main_window():
-    """Создает и инициирует виджеты главного окна
-    :param: нет
-    :return: ничего
-    """
-    global root, open_file_button, open_file_label #создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
-    root = tkinter.Tk()
-    root.grid_rowconfigure(0, weight=1)
-    root.title("WAB reports")
-    open_file_button = tkinter.Button(root, text = 'Open report')
-    open_file_button.grid(row = 0, column = 3, sticky = 'nw')
-    open_file_button.bind('<Button>', open_report_file)
+    """Создает и инициирует виджеты главного окна"""
+    global main_window, main_frame, top_frame, open_file_button, open_file_label, bottom_frame, save_report_button, \
+        table_frame, canvas_frame  #создание глобальных виджетов главного окна и кнопки открытия файла, имя файла отчета
+    main_window = Tk()  # Создадим главное окно программы
+    main_window.title('Программа визуализации отчетов')  # Зададим заголовок главного окна программы
+    main_window.geometry('600x300')
 
-    open_file_label = tkinter.Label(root, text = 'Report filename:')
-    open_file_label.grid(row = 0, column = 0, columnspan = 2, sticky = 'ne')
+    main_frame = Frame(main_window)  # Создадим главный фрейм окна отчета
+    main_frame.config(bg='black')
+    main_frame.pack(side=TOP, expand=YES, fill=BOTH)  # Растянем фрейм на все пространство главного окна
+
+    top_frame = Frame(main_frame)  # Создадим фрейм для кнопки выбора файла-отчета
+    top_frame.config(bg='grey')
+    top_frame.pack(side=TOP, fill=X)  # Привяжем фрейм к верхней границе и будем растягивать по стороне X
+    open_file_button = Button(top_frame, text='Open report')
+    open_file_button.pack(side=RIGHT)  # Поместим справа кнопку открытия файла с отчетом
+    open_file_button.bind('<Button>', open_report_file)  # Привяжем к кнопке обработчик
+    open_file_label = Label(top_frame, text='Report filename:')
+    open_file_label.pack(side=LEFT, expand=YES, fill=X)  # Поместим слева от кнопки надпись
+
+    bottom_frame = Frame(main_frame)  # Создадим фрейм для кнопки сохранения отчета в файле xml
+    bottom_frame.config(bg='grey')
+    bottom_frame.pack(side=BOTTOM, fill=X)  # Привяжем фрейм к верхней границе и будем растягивать по стороне X
+    save_report_button = Button(bottom_frame, text='Save report as XML')
+    save_report_button.pack(side=RIGHT)  # Поместим справа кнопку сохранения отчета
+
+    table_frame = Frame(main_frame)  # Создадим фрейм для размещения таблицы с данными
+    table_frame.config(bg='grey')
+    table_frame.pack(side=LEFT, expand=YES, fill=BOTH)
+
+    canvas_frame = Frame(main_frame)  # Создадим фрейм для размещения графика
+    canvas_frame.config(bg='blue')
+    canvas_frame.pack(side=RIGHT, expand=YES, fill=BOTH)
+
 
 if __name__ == '__main__':
     init_main_window()
-    root.mainloop()
+    main_window.mainloop()
