@@ -5,15 +5,17 @@ from tkinter import filedialog as fd
 import pprint
 import matplotlib.pyplot as plt
 
+
 def plot_pie_report(table):
     """
     Рисует круговую диаграмму
     :param table: Таблица с данными. В первой строке содержит подписи, во второй - данные 
     :return: ничего
     """
-    #plt.pie(table[1][])
+    # plt.pie(table[1][])
 
-def open_report_file(event):
+
+def open_report_file():
     """Функция открывает файл с отчетом"""
     table = []
     with open(fd.askopenfilename(filetypes=[('Report files:', '*.csv')])) as infile:
@@ -41,9 +43,8 @@ def init_main_window():
     top_frame = Frame(main_frame)  # Создадим фрейм для кнопки выбора файла-отчета
     top_frame.config(bg='grey')
     top_frame.pack(side=TOP, fill=X)  # Привяжем фрейм к верхней границе и будем растягивать по стороне X
-    open_file_button = Button(top_frame, text='Open report')
+    open_file_button = Button(top_frame, text='Open report', command=open_report_file)
     open_file_button.pack(side=RIGHT)  # Поместим справа кнопку открытия файла с отчетом
-    open_file_button.bind('<Button>', open_report_file)  # Привяжем к кнопке обработчик
     open_file_label = Label(top_frame, text='Report filename:')
     open_file_label.pack(side=LEFT, expand=YES, fill=X)  # Поместим слева от кнопки надпись
 
